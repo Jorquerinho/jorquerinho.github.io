@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partida - Ajedrez Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <img src="black_logo.png" alt="Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Página de Inicio</a></li>
+                <li><a href="registro.html">Registro</a></li>
+                <li><a href="perfil.html">Perfil</a></li>
+                <li><a href="partida.html">Partida</a></li>
+                <li><a href="historia.html">Historia</a></li>
+                <li><a href="desarrolladores.html">Desarrolladores</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="game-section">
+            <div class="container">
+                <h2>Partida en Curso</h2>
+
+                <div class="game-info">
+                    <select id="opponent-select">
+                        <option value="">Seleccionar Oponente</option>
+                        <option value="jugador1">Jugador 1</option>
+                        <option value="jugador2">Jugador 2</option>
+                        <option value="jugador3">Jugador 3</option>
+                    </select>
+                    <div class="turn-indicator" id="turn-indicator">Turno: Jugador 1</div>
+                    <button id="resign-button">Rendirse</button>
+                </div>
+
+                <div class="chessboard" id="chessboard">
+                    <!-- Fila 8 -->
+                    <div class="square dark"></div>
+                    <div class="square light"></div>
+                    <div class="square dark"></div>
+                    <div class="square light"></div>
+                    <div class="square dark"></div>
+                    <div class="square light"></div>
+                    <div class="square dark"></div>
+                    <div class="square light"></div>
+                    <!-- Fila 7 -->
+                    <div class="square light"></div>
+                    <div class="square dark"></div>
+                    <div class="square light"></div>
+                    <div class="square dark"></div>
+                    <div class="square light"></div>
+                    <div class="square dark"></div>
+                    <div class="square light"></div>
+                    <div class="square dark"></div>
+                    <!-- Fila 6 -->
+                    <div class="square dark"></div>
+                    <div class="square light"></div>
+                    <div class="square dark"></div>
+                    <div class="square light"></div>
+                    <div class="square dark"></div>
+                    <div class="square light"></div>
+                    <div class="square dark"></div>
+                    <div class="square light"></div>
+                    <!-- Fila 5 -->
+                    <div class="square light"></div>
+                    <div class="square dark"></div>
+                    <div class="square light"></div>
+                    <div class="square dark"></div>
+                    <div class="square light"></div>
+                    <div class="square dark"></div>
+                    <div class="square light"></div>
+                    <div class="square dark"></div>
+                    <!-- Fila 4 -->
+                    <div class="square dark"></div>
+                    <div class="square light"></div>
+                    <div class="square dark"></div>
+                    <div class="square light"></div>
+                    <div class="square dark"></div>
+                    <div class="square light"></div>
+                    <div class="square dark"></div>
+                    <div class="square light"></div>
+                    <!-- Fila 3 -->
+                    <div class="square light"></div>
+                    <div class="square dark"></div>
+                    <div class="square light"></div>
+                    <div class="square dark"></div>
+                    <div class="square light"></div>
+                    <div class="square dark"></div>
+                    <div class="square light"></div>
+                    <div class="square dark"></div>
+                    <!-- Fila 2 -->
+                    <div class="square dark"></div>
+                    <div class="square light"></div>
+                    <div class="square dark"></div>
+                    <div class="square light"></div>
+                    <div class="square dark"></div>
+                    <div class="square light"></div>
+                    <div class="square dark"></div>
+                    <div class="square light"></div>
+                    <!-- Fila 1 -->
+                    <div class="square light"></div>
+                    <div class="square dark"></div>
+                    <div class="square light"></div>
+                    <div class="square dark"></div>
+                    <div class="square light"></div>
+                    <div class="square dark"></div>
+                    <div class="square light"></div>
+                    <div class="square dark"></div>
+                </div>
+
+                <div class="move-history">
+                    <h3>Historial de Movimientos</h3>
+                    <ul id="move-list">
+                        <li>1. e4</li>
+                        <li>1... c5</li>
+                        <li>2. Nf3</li>
+                        <li>2... d6</li>
+                        <li>3. d4</li>
+                        <li>3... cxd4</li>
+                        <li>4. Nxd4</li>
+                        <li>4... Nf6</li>
+                        <li>5. Nc3</li>
+                        <li>5... a6</li>
+                        <li>6. Be3</li>
+                        <li>6... e6</li>
+                        <li>7. f3</li>
+                        <li>7... Be7</li>
+                        <li>8. Qd2</li>
+                        <li>8... O-O</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Proyecto Semestral - Ajedrez Online</p>
+    </footer>
+</body>
+</html>
