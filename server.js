@@ -22,7 +22,7 @@ mongoose.connect('mongodb://localhost:27017/ajedrez') // Conectando a la base de
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'frontend'))); // Archivos estáticos
+app.use(express.static(__dirname)); // Servir archivos desde el directorio actual
 
 // Middleware para proteger rutas
 function verificarToken(req, res, next) {
