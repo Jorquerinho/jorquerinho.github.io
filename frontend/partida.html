@@ -13,7 +13,7 @@
                 <img src="black_logo.png" alt="Logo" />
             </div>
             <ul class="nav-links">
-                <li><a href="index.html">Página de Inicio</a></li>
+                <li><a href="index.html" id="navLinkInicio">Página de Inicio</a></li>
                 <li><a href="registro.html">Registro</a></li>
                 <li><a href="perfil.html">Perfil</a></li>
                 <li><a href="partida.html">Partida</a></li>
@@ -69,8 +69,10 @@
             return res.json();
           })
           .then(data => {
+            const navLinkInicio = document.getElementById('navLinkInicio');
             if (data && data.nombre) {
               console.log(`Bienvenido ${data.nombre}`);
+              if (navLinkInicio) navLinkInicio.href = 'Pagina_principal.html';
 
               const container = document.querySelector('.game-section .container');
 
@@ -81,6 +83,9 @@
               welcomeMsg.style.marginBottom = '15px';
 
               container.insertBefore(welcomeMsg, container.firstChild);
+            } else {
+              // Si no hay datos de usuario (no logueado), el enlace ya apunta a index.html por defecto.
+              // if (navLinkInicio) navLinkInicio.href = 'index.html'; // Opcional, para ser explícito.
             }
           })
           .catch(err => {
