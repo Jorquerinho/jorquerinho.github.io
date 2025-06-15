@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Partida - Ajedrez Online</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <img src="black_logo.png" alt="Logo" />
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Página de Inicio</a></li>
+                <li><a href="registro.html">Registro</a></li>
+                <li><a href="perfil.html">Perfil</a></li>
+                <li><a href="partida.html">Partida</a></li>
+                <li><a href="historia.html">Historia</a></li>
+                <li><a href="desarrolladores.html">Desarrolladores</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="game-section">
+            <div class="container">
+                <!-- Aquí se insertará el mensaje de bienvenida -->
+                <h2>Partida en Curso</h2>
+
+                <div class="game-info">
+                    <select id="opponent-select">
+                        <option value="">Seleccionar Oponente</option>
+                        <option value="jugador1">Jugador 1</option>
+                        <option value="jugador2">Jugador 2</option>
+                        <option value="jugador3">Jugador 3</option>
+                    </select>
+                    <div class="turn-indicator" id="turn-indicator">Turno: Jugador 1</div>
+                    <button id="boton-nuevo-juego">Nuevo Juego</button>
+                    <button id="boton-rendirse">Rendirse</button>
+                </div>
+
+                <div class="chessboard" id="chessboard">
+                </div>
+
+                <div class="move-history">
+                    <h3>Historial de Movimientos</h3>
+                    <ul id="Movimientos"></ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Proyecto Semestral - Ajedrez Online</p>
+    </footer>
+
+    <script src="script.js" defer></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        fetch('/usuario-info')
+          .then(res => {
+            if (res.status === 401) {
+              console.log('Usuario no autenticado');
+              return null;
+            }
+            return res.json();
+          })
+          .then(data => {
+            if (data && data.nombre) {
+              console.log(`Bienvenido ${data.nombre}`);
+
+              const container = document.querySelector('.game-section .container');
+
+              const welcomeMsg = document.createElement('p');
+              welcomeMsg.textContent = `Bienvenido ${data.nombre}, ¡que disfrutes la partida!`;
+              welcomeMsg.style.fontWeight = 'bold';
+              welcomeMsg.style.color = 'darkgreen';
+              welcomeMsg.style.marginBottom = '15px';
+
+              container.insertBefore(welcomeMsg, container.firstChild);
+            }
+          })
+          .catch(err => {
+            console.error('Error obteniendo info del usuario:', err);
+          });
+      });
+    </script>
+</body>
+</html>
