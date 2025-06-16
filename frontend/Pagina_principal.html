@@ -20,9 +20,7 @@
                 <li><a href="historia.html">Historia</a></li>
                 <li><a href="desarrolladores.html">Desarrolladores</a></li>
             </ul>
-            <!-- Mensaje de bienvenida al usuario -->
             <span id="mensajeUsuario" style="font-weight: bold; color: darkblue; margin-left: 15px;"></span>
-            <!-- Botón de Cerrar Sesión -->
             <button id="logoutButton" style="margin-left: 15px; padding: 8px 12px; background-color: #d9534f; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9em;">Cerrar Sesión</button>
         </div>
     </nav>
@@ -59,7 +57,6 @@
             <div class="container">
                 <h2>Mis Partidas Creadas</h2>
                 <ul id="listaPartidasCreadas">
-                    <!-- Las partidas creadas se cargarán aquí -->
                 </ul>
             </div>
         </section>
@@ -68,7 +65,6 @@
             <div class="container">
                 <h2>Mis Invitaciones Pendientes</h2>
                 <ul id="listaInvitaciones">
-                    <!-- Las invitaciones se cargarán aquí -->
                 </ul>
             </div>
         </section>
@@ -114,7 +110,6 @@
     </footer>
 
    <script>
-  // Cuando la página carga, pedimos la info del usuario logueado
   fetch('/usuario-info')
     .then(res => {
       console.log('Respuesta status:', res.status);
@@ -128,11 +123,11 @@
       const navLinkInicio = document.getElementById('navLinkInicio');
       console.log('Datos recibidos:', data);
 
-      if (data && data.nombre) {   // Cambié aquí: data.nombre en vez de data.email
+      if (data && data.nombre) {
         document.getElementById('mensajeUsuario').textContent = `Bienvenido ${data.nombre}`;
-        alert(`Bienvenido ${data.nombre}`);  // Aquí debería salir el pop-up
+        alert(`Bienvenido ${data.nombre}`);
         if (navLinkInicio) {
-          navLinkInicio.href = 'Pagina_principal.html'; // Si está logueado, "Página de Inicio" va a Pagina_principal.html
+          navLinkInicio.href = 'Pagina_principal.html';
         }
         cargarMisPartidasCreadas();
         cargarMisInvitaciones();
@@ -144,28 +139,23 @@
       console.error('Error obteniendo info del usuario:', err);
     });
 
-  // Funcionalidad para el botón de Cerrar Sesión
   const logoutButton = document.getElementById('logoutButton');
   if (logoutButton) {
     logoutButton.addEventListener('click', () => {
-      // Realizar una solicitud POST al endpoint /logout de tu backend
       fetch('/logout', { method: 'POST' })
         .then(response => {
           if (!response.ok) {
             console.warn('La solicitud de logout al servidor no fue exitosa (estado: ' + response.status + '), pero se redirigirá igualmente.');
           }
-          // Redirigir a la página de inicio (index.html)
           window.location.href = 'index.html';
         })
         .catch(error => {
           console.error('Error durante la solicitud de logout:', error);
-          // Redirigir igualmente en caso de error de red para asegurar que el usuario sale de la vista actual
           window.location.href = 'index.html';
         });
     });
   }
 
-  // Funcionalidad para el botón de Crear Nueva Partida
   const createGameButton = document.querySelector('.create-game-button');
   if (createGameButton) {
     createGameButton.addEventListener('click', () => {
@@ -176,13 +166,11 @@
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            // El token JWT se envía automáticamente como cookie, no es necesario añadirlo aquí
           },
           body: JSON.stringify({ colorElegido: colorElegido.toLowerCase() })
         })
         .then(response => {
           if (!response.ok) {
-            // Intenta parsear el JSON del error si existe, sino usa el texto.
             return response.json().catch(() => response.text()).then(errBody => {
                  throw new Error(errBody.mensaje || errBody || `Error del servidor: ${response.status}`);
             });
@@ -191,15 +179,12 @@
         })
         .then(data => {
           alert(`${data.mensaje} ID de Partida: ${data.partidaId}`);
-          // Aquí podrías, por ejemplo, actualizar una lista de "Mis Partidas" en la página
-          // o redirigir al usuario a la sala de espera de la partida:
-          // window.location.href = `/partida.html?id=${data.partidaId}`; // Esto requeriría que partida.html pueda cargar partidas por ID
         })
         .catch(error => {
           console.error('Error al crear partida:', error);
           alert('Error al crear la partida: ' + error.message);
         });
-      } else if (colorElegido !== null) { // Si el usuario escribió algo pero no es válido o canceló
+      } else if (colorElegido !== null) {
         alert("Selección de color cancelada o no válida. Por favor, escribe 'blancas' o 'negras'.");
       }
     });
@@ -244,7 +229,6 @@
               <a href="/partida.html?id=${partida.identificadorUnico}" style="margin-right: 10px;">Ir a la partida</a>
               <button onclick="eliminarPartida('${partida.identificadorUnico}')" style="background-color: #f44336; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Eliminar Partida</button>
             `;
-            // Mostrar invitaciones enviadas para esta partida
             if(partida.invitaciones && partida.invitaciones.length > 0){
                 const ulInvitaciones = document.createElement('ul');
                 ulInvitaciones.style.marginLeft = "20px";
@@ -281,8 +265,8 @@
     .then(response => response.json())
     .then(data => {
       alert(data.mensaje);
-      if (!data.mensaje.startsWith('❌')) { // Si no es un mensaje de error
-        cargarMisPartidasCreadas(); // Recargar la lista para mostrar la invitación enviada
+      if (!data.mensaje.startsWith('❌')) {
+        cargarMisPartidasCreadas();
       }
     })
     .catch(err => {
@@ -336,7 +320,7 @@
       .then(data => {
         alert(data.mensaje);
         cargarMisInvitaciones();
-        cargarMisPartidasCreadas(); // Si la invitación era para una partida propia (aunque raro) o para actualizar estados
+        cargarMisPartidasCreadas();
       })
       .catch(err => {
         console.error('Error al aceptar invitación:', err);
@@ -368,8 +352,8 @@
     .then(response => response.json())
     .then(data => {
       alert(data.mensaje);
-      if (!data.mensaje.startsWith('❌')) { // Si no es un mensaje de error
-        cargarMisPartidasCreadas(); // Recargar la lista para reflejar la eliminación
+      if (!data.mensaje.startsWith('❌')) {
+        cargarMisPartidasCreadas();
       }
     })
     .catch(err => {

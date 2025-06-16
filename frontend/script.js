@@ -36,7 +36,7 @@ let capturadasPorNegras = [];
 let historialMovimientos = [];
 let juegoTerminado = false;
 
-/**
+/*
  * Configura el tablero con las piezas en sus posiciones iniciales.
  */
 function inicializarTablero() {

@@ -26,7 +26,6 @@
     <main>
         <section class="game-section">
             <div class="container">
-                <!-- Aquí se insertará el mensaje de bienvenida -->
                 <h2>Partida en Curso</h2>
 
                 <div class="game-info">
@@ -84,8 +83,6 @@
 
               container.insertBefore(welcomeMsg, container.firstChild);
             } else {
-              // Si no hay datos de usuario (no logueado), el enlace ya apunta a index.html por defecto.
-              // if (navLinkInicio) navLinkInicio.href = 'index.html'; // Opcional, para ser explícito.
             }
           })
           .catch(err => {
