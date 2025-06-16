@@ -25,6 +25,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'frontend')));
+app.use(express.static(path.join(__dirname, 'frontend')));
 
 function verificarToken(req, res, next) {
   const token = req.cookies.token;
@@ -203,11 +204,11 @@ app.post('/partidas/:partidaId/invitar', verificarToken, async (req, res) => {
 
     const invitacionExistente = partida.invitaciones.find(inv => inv.usuarioId.toString() === usuarioAInvitar._id.toString());
     if (invitacionExistente) {
-      return res.status(400).json({ mensaje: `❌ Ya has invitado a ${usuarioAInvitar.nombre} a esta partida.` });
+      return res.status(400).json({ mensaje: `Ya has invitado a ${usuarioAInvitar.nombre} a esta partida.` });
     }
 
     if (tipoInvitacion === 'jugador' && partida.jugadorBlancasId && partida.jugadorNegrasId) {
-        return res.status(400).json({ mensaje: '❌ La partida ya tiene dos jugadores. Puedes invitarlo como espectador.' });
+        return res.status(400).json({ mensaje: 'La partida ya tiene dos jugadores. Puedes invitarlo como espectador.' });
     }
 
     partida.invitaciones.push({
