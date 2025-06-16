@@ -13,8 +13,13 @@ const app = express();
 const PORT = 3000;
 const JWT_SECRET = process.env.JWT_SECRET || 'clave_super_secreta_12345'; // esto es para probar, cambiar despues!
 
+const MONGODB_USER = "Jorquera"; // Reemplaza con tu usuario de MongoDB
+const MONGODB_PASS = "Anandita12"; // Reemplaza con tu contraseña
 // Conexión a MongoDB
-mongoose.connect('mongodb://localhost:27017/ajedrez') // Conectando a la base de datos
+
+
+// Conexión a MongoDB
+mongoose.connect(`mongodb://${MONGODB_USER}:${MONGODB_PASS}@localhost:27017/ajedrez?authSource=admin`)
   .then(() => console.log('✅ Conectado a MongoDB'))
   .catch(err => console.error('❌ Error en la conexión:', err));
 
@@ -22,7 +27,7 @@ mongoose.connect('mongodb://localhost:27017/ajedrez') // Conectando a la base de
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'frontend'))); // Archivos estáticos
+app.use(express.static(path.join(__dirname, 'frontend')));
 
 // Middleware para proteger rutas
 function verificarToken(req, res, next) {
