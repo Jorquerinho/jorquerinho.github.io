@@ -1,0 +1,374 @@
+/* Estilo general del cuerpo de la página */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #FAF3E0;
+    color: #6F4E37;
+    line-height: 1.6;
+}
+
+/* Colores para títulos */
+h1, h2, h3 {
+    color: #6F4E37;
+}
+
+/* Estilo de enlaces */
+a {
+    text-decoration: none;
+    color: #6F4E37;
+}
+
+/* Barra de navegación */
+nav {
+    background-color: #A07855;
+    color: #FFF;
+    padding: 10px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* Contenedor del contenido dentro de la barra de navegación */
+.nav-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Logo dentro de la barra */
+.logo img {
+    height: 50px;
+}
+
+/* Lista de enlaces del menú de navegaciónn */
+.nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+/* Espaciado entre los elementos del menú */
+.nav-links li {
+    margin-left: 20px;
+}
+
+/* Estilo de enlaces del menú */
+.nav-links a {
+    color: #FFF;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+/* Efecto al pasar el mouse por los enlaces */
+.nav-links a:hover {
+    color: #F0E6D2;
+}
+
+/* Encabezado principal */
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: #E0C8A8;
+}
+
+/* Contenido principal */
+main {
+    padding: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* Secciones dentro del contenido */
+section {
+    margin-bottom: 20px;
+    background-color: #F8F0E3;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgb(0 0 0 / 10%);
+}
+
+/* Contenedor del formulario de login */
+.login-container {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* Estilo del formulario */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estilo de etiquetas */
+label {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* Campos de entrada */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"] {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #B88660;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Botón para enviar formulario */
+button[type="submit"] {
+    background-color: #A07855;
+    color: #FFF;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+/* Efecto al pasar el mouse sobre el botón */
+button[type="submit"]:hover {
+    background-color: #8B694F;
+}
+
+/* Agrupación de campos */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+/* Contenedor del perfil de usuario */
+.profile-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Imagen del perfil centrada */
+.profile-picture {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Estilo de la imagen de perfil */
+#profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #A07855;
+}
+
+/* Botón para subir imagen */
+.upload-button {
+    display: inline-block;
+    background-color: #A07855;
+    color: #FFF;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+/* Efecto al pasar el mouse */
+.upload-button:hover {
+    background-color: #8B694F;
+}
+
+/* Pie de página */
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #A07855;
+    color: #FFF;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Contenedor de estadísticas y botón de crear partida */
+.game-stats-and-create .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+/* Alineación de estadísticas y botón */
+.stats-and-button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+/* Contenedor de estadísticas */
+.game-stats {
+    flex-grow: 1;
+    margin-bottom: 0;
+}
+
+/* Cuadrícula de estadísticas */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+}
+
+/* Cada ítem de estadística */
+.stat-item {
+    text-align: center;
+    border: 1px solid #B88660;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #F0E6D2;
+}
+
+/* Texto dentro del ítem de estadística */
+.stat-label {
+    display: block;
+    font-weight: bold;
+}
+
+/* Contenedor del botón para crear partida */
+.create-game-button-container {
+    text-align: right;
+    flex-shrink: 0;
+}
+
+/* Botón para crear nueva partida */
+.create-game-button {
+    background-color: #A07855;
+    color: #FFF;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-top: 0;
+}
+
+/* Efecto hover en el botón */
+.create-game-button:hover {
+    background-color: #8B694F;
+}
+
+/* Diseño de listas de partidas */
+.game-lists-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* Estilo de listas de partidas en curso y finalizadas */
+.current-games,
+.finished-games {
+    border: 1px solid #B88660;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #F0E6D2;
+}
+
+/* Listas sin viñetas */
+.game-lists ul,
+.public-games ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* Espaciado entre elementos de la lista */
+.game-lists li,
+.public-games li {
+    margin-bottom: 10px;
+}
+
+/* Tablero de ajedrez */
+.chessboard {
+    display: grid;
+    grid-template-columns: repeat(8, 50px);
+    grid-template-rows: repeat(8, 50px);
+    border: 2px solid #B88660;
+    margin: 20px auto;
+}
+
+/* Cada casilla del tablero */
+.square {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+/* Casilla clara */
+.light {
+    background-color: #f0d9b5;
+}
+
+/* Casilla oscura */
+.dark {
+    background-color: #b58863;
+}
+
+/* Historial de movimientos */
+.move-history {
+    border: 1px solid #B88660;
+    padding: 10px;
+    margin-bottom: 20px;
+    height: 200px;
+    overflow-y: auto;
+    background-color: #F0E6D2;
+}
+
+/* Lista de movimientos */
+.move-history ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* Espacio entre movimientos */
+.move-history li {
+    margin-bottom: 5px;
+}
+
+/* Información del juego */
+.game-info {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Selectores y botones dentro de la información del juego */
+.game-info select,
+.game-info button {
+    padding: 8px;
+    border: 1px solid #B88660;
+    border-radius: 4px;
+    background-color: #F0E6D2;
+}
+
+/* Indicador de turno */
+.turn-indicator {
+    font-weight: bold;
+    padding: 10px;
+    border: 1px solid #B88660;
+    border-radius: 4px;
+    background-color: #F0E6D2;
+}

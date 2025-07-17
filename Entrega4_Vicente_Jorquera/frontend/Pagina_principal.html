@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Partida - Ajedrez Online</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <nav>
+        <div class="nav-container" style="display: flex; align-items: center; justify-content: space-between;">
+            <div class="logo" style="display: flex; align-items: center;">
+                <img src="black_logo.png" alt="Logo" />
+            </div>
+            <ul class="nav-links" style="display: flex; gap: 10px; list-style: none; margin: 0; padding: 0;">
+                <li><a href="index.html" id="navLinkInicio">Página de Inicio</a></li>
+                <li><a href="registro.html">Registro</a></li>
+                <li><a href="perfil.html">Perfil</a></li>
+                <li><a href="partida.html">Partida</a></li>
+                <li><a href="historia.html">Historia</a></li>
+                <li><a href="desarrolladores.html">Desarrolladores</a></li>
+            </ul>
+            <span id="mensajeUsuario" style="font-weight: bold; color: darkblue; margin-left: 15px;"></span>
+            <button id="logoutButton" style="margin-left: 15px; padding: 8px 12px; background-color: #d9534f; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9em;">Cerrar Sesión</button>
+        </div>
+    </nav>
+
+    <main>
+        <section class="game-stats-and-create">
+            <div class="container">
+                <div class="stats-and-button-container">
+                    <div class="game-stats">
+                        <h2>Estadísticas</h2>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <span class="stat-label">Victorias:</span>
+                                <span class="stat-value">15</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Derrotas:</span>
+                                <span class="stat-value">8</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Empates:</span>
+                                <span class="stat-value">3</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="create-game-button-container">
+                        <button class="create-game-button">Crear Nueva Partida</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-created-games">
+            <div class="container">
+                <h2>Mis Partidas Creadas</h2>
+                <ul id="listaPartidasCreadas">
+                </ul>
+            </div>
+        </section>
+
+        <section class="my-invitations">
+            <div class="container">
+                <h2>Mis Invitaciones Pendientes</h2>
+                <ul id="listaInvitaciones">
+                </ul>
+            </div>
+        </section>
+
+        <section class="game-lists">
+            <div class="container">
+                <div class="game-lists-grid">
+                    <div class="current-games">
+                        <h2>Partidas en Curso</h2>
+                        <ul>
+                            <li><a href="#">Partida vs. Jugador1 (En curso)</a></li>
+                            <li><a href="#">Partida vs. Jugador2 (En curso)</a></li>
+                            <li><a href="#">Partida vs. Jugador3 (En curso)</a></li>
+                        </ul>
+                    </div>
+                    <div class="finished-games">
+                        <h2>Historial de Partidas</h2>
+                        <ul>
+                            <li><a href="#">Partida vs. Jugador4 (Victoria)</a></li>
+                            <li><a href="#">Partida vs. Jugador5 (Derrota)</a></li>
+                            <li><a href="#">Partida vs. Jugador6 (Tablas)</a></li>
+                            <li><a href="#">Partida vs. Jugador7 (Victoria)</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="public-games">
+            <div class="container">
+                <h2>Partidas Públicas Disponibles</h2>
+                <ul>
+                    <li><a href="#">Partida Pública 1 (Jugador: Jugador8)</a></li>
+                    <li><a href="#">Partida Pública 2 (Jugador: Jugador9)</a></li>
+                    <li><a href="#">Partida Pública 3 (Jugador: Jugador10)</a></li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Proyecto Semestral - Ajedrez Online</p>
+    </footer>
+
+   <script>
+  fetch('/usuario-info')
+    .then(res => {
+      console.log('Respuesta status:', res.status);
+      if (res.status === 401) {
+        console.log('Usuario no autenticado');
+        return null;
+      }
+      return res.json();
+    })
+    .then(data => {
+      const navLinkInicio = document.getElementById('navLinkInicio');
+      console.log('Datos recibidos:', data);
+
+      if (data && data.nombre) {
+        document.getElementById('mensajeUsuario').textContent = `Bienvenido ${data.nombre}`;
+        alert(`Bienvenido ${data.nombre}`);
+        if (navLinkInicio) {
+          navLinkInicio.href = 'Pagina_principal.html';
+        }
+        cargarMisPartidasCreadas();
+        cargarMisInvitaciones();
+      } else {
+        console.log('No hay datos de nombre para mostrar.');
+      }
+    })
+    .catch(err => {
+      console.error('Error obteniendo info del usuario:', err);
+    });
+
+  const logoutButton = document.getElementById('logoutButton');
+  if (logoutButton) {
+    logoutButton.addEventListener('click', () => {
+      fetch('/logout', { method: 'POST' })
+        .then(response => {
+          if (!response.ok) {
+            console.warn('La solicitud de logout al servidor no fue exitosa (estado: ' + response.status + '), pero se redirigirá igualmente.');
+          }
+          window.location.href = 'index.html';
+        })
+        .catch(error => {
+          console.error('Error durante la solicitud de logout:', error);
+          window.location.href = 'index.html';
+        });
+    });
+  }
+
+  const createGameButton = document.querySelector('.create-game-button');
+  if (createGameButton) {
+    createGameButton.addEventListener('click', () => {
+      const colorElegido = prompt("Elige tu color para la nueva partida: escribe 'blancas' o 'negras'", "blancas");
+
+      if (colorElegido && (colorElegido.toLowerCase() === 'blancas' || colorElegido.toLowerCase() === 'negras')) {
+        fetch('/partidas/crear', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ colorElegido: colorElegido.toLowerCase() })
+        })
+        .then(response => {
+          if (!response.ok) {
+            return response.json().catch(() => response.text()).then(errBody => {
+                 throw new Error(errBody.mensaje || errBody || `Error del servidor: ${response.status}`);
+            });
+          }
+          return response.json();
+        })
+        .then(data => {
+          alert(`${data.mensaje} ID de Partida: ${data.partidaId}`);
+        })
+        .catch(error => {
+          console.error('Error al crear partida:', error);
+          alert('Error al crear la partida: ' + error.message);
+        });
+      } else if (colorElegido !== null) {
+        alert("Selección de color cancelada o no válida. Por favor, escribe 'blancas' o 'negras'.");
+      }
+    });
+  }
+
+  function cargarMisPartidasCreadas() {
+    fetch('/mis-partidas-creadas')
+      .then(response => {
+        if (!response.ok) {
+          if (response.status === 401) return { partidas: [], error: 'No autenticado' };
+          throw new Error('Error al cargar partidas creadas: ' + response.status);
+        }
+        return response.json();
+      })
+      .then(partidas => {
+        const listaPartidasEl = document.getElementById('listaPartidasCreadas');
+        if (!listaPartidasEl) return;
+        listaPartidasEl.innerHTML = '';
+
+        if (partidas.error) {
+            console.log(partidas.error);
+            return;
+        }
+
+        if (partidas && partidas.length > 0) {
+          partidas.forEach(partida => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+              Partida ID: ${partida.identificadorUnico} (Tu color: ${partida.colorCreador}) - Estado: ${partida.estado}
+              <br>
+              Jugador Blancas: ${partida.jugadorBlancasId ? 'Ocupado' : 'Libre'} | Jugador Negras: ${partida.jugadorNegrasId ? 'Ocupado' : 'Libre'}
+              ${partida.estado === 'esperando_oponente' ? `
+                <form onsubmit="invitarAUsuario(event, '${partida.identificadorUnico}')">
+                  <input type="email" name="emailUsuarioAInvitar" placeholder="Email del invitado" required>
+                  <select name="tipoInvitacion">
+                    <option value="jugador">Invitar como Jugador</option>
+                    <option value="espectador">Invitar como Espectador</option>
+                  </select>
+                  <button type="submit">Invitar</button>
+                </form>
+              ` : ''}
+              <a href="/partida.html?id=${partida.identificadorUnico}" style="margin-right: 10px;">Ir a la partida</a>
+              <button onclick="eliminarPartida('${partida.identificadorUnico}')" style="background-color: #f44336; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Eliminar Partida</button>
+            `;
+            if(partida.invitaciones && partida.invitaciones.length > 0){
+                const ulInvitaciones = document.createElement('ul');
+                ulInvitaciones.style.marginLeft = "20px";
+                partida.invitaciones.forEach(inv => {
+                    const liInv = document.createElement('li');
+                    liInv.textContent = `Invitado: ${inv.nombreUsuario} (${inv.tipo}) - Estado: ${inv.estado}`;
+                    ulInvitaciones.appendChild(liInv);
+                });
+                li.appendChild(ulInvitaciones);
+            }
+            listaPartidasEl.appendChild(li);
+          });
+        } else {
+          listaPartidasEl.innerHTML = '<li>No has creado ninguna partida aún.</li>';
+        }
+      })
+      .catch(error => {
+        console.error('Error al obtener mis partidas creadas:', error);
+        document.getElementById('listaPartidasCreadas').innerHTML = '<li>Error al cargar tus partidas.</li>';
+      });
+  }
+
+  function invitarAUsuario(event, partidaId) {
+    event.preventDefault();
+    const form = event.target;
+    const emailUsuarioAInvitar = form.elements.emailUsuarioAInvitar.value;
+    const tipoInvitacion = form.elements.tipoInvitacion.value;
+
+    fetch(`/partidas/${partidaId}/invitar`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ emailUsuarioAInvitar, tipoInvitacion })
+    })
+    .then(response => response.json())
+    .then(data => {
+      alert(data.mensaje);
+      if (!data.mensaje.startsWith('❌')) {
+        cargarMisPartidasCreadas();
+      }
+    })
+    .catch(err => {
+      console.error('Error al invitar usuario:', err);
+      alert('Error al enviar invitación.');
+    });
+  }
+
+  function cargarMisInvitaciones() {
+    fetch('/mis-invitaciones')
+      .then(response => {
+        if (!response.ok) {
+          if (response.status === 401) return { invitaciones: [], error: 'No autenticado' };
+          throw new Error('Error al cargar invitaciones: ' + response.status);
+        }
+        return response.json();
+      })
+      .then(invitaciones => {
+        const listaInvitacionesEl = document.getElementById('listaInvitaciones');
+        if (!listaInvitacionesEl) return;
+        listaInvitacionesEl.innerHTML = '';
+
+        if (invitaciones.error) {
+            console.log(invitaciones.error);
+            return;
+        }
+
+        if (invitaciones && invitaciones.length > 0) {
+          invitaciones.forEach(inv => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+              Invitación de <strong>${inv.nombreCreadorPartida}</strong> para su partida (Tipo: ${inv.tipo})
+              <button onclick="aceptarInvitacion('${inv.partidaId}', '${inv.invitacionId}')">Aceptar</button>
+              <button onclick="rechazarInvitacion('${inv.partidaId}', '${inv.invitacionId}')">Rechazar</button>
+              <a href="partida.html?id=${inv.partidaId}" style="margin-right: 10px;">Ir a la partida</a>
+            `;
+            listaInvitacionesEl.appendChild(li);
+          });
+        } else {
+          listaInvitacionesEl.innerHTML = '<li>No tienes invitaciones pendientes.</li>';
+        }
+      })
+      .catch(error => {
+        console.error('Error al obtener mis invitaciones:', error);
+        document.getElementById('listaInvitaciones').innerHTML = '<li>Error al cargar invitaciones.</li>';
+      });
+  }
+
+  function aceptarInvitacion(partidaId, invitacionId) {
+    fetch(`/partidas/${partidaId}/invitaciones/${invitacionId}/aceptar`, { method: 'POST' })
+      .then(response => response.json())
+      .then(data => {
+        alert(data.mensaje);
+        cargarMisInvitaciones();
+        cargarMisPartidasCreadas();
+      })
+      .catch(err => {
+        console.error('Error al aceptar invitación:', err);
+        alert('Error al aceptar invitación.');
+      });
+  }
+
+  function rechazarInvitacion(partidaId, invitacionId) {
+    fetch(`/partidas/${partidaId}/invitaciones/${invitacionId}/rechazar`, { method: 'POST' })
+      .then(response => response.json())
+      .then(data => {
+        alert(data.mensaje);
+        cargarMisInvitaciones();
+      })
+      .catch(err => {
+        console.error('Error al rechazar invitación:', err);
+        alert('Error al rechazar invitación.');
+      });
+  }
+
+  function eliminarPartida(partidaId) {
+    if (!confirm('¿Estás seguro de que quieres eliminar esta partida? Esta acción no se puede deshacer.')) {
+      return;
+    }
+
+    fetch(`/partidas/${partidaId}`, {
+      method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(data => {
+      alert(data.mensaje);
+      if (!data.mensaje.startsWith('❌')) {
+        cargarMisPartidasCreadas();
+      }
+    })
+    .catch(err => {
+      console.error('Error al eliminar partida:', err);
+      alert('Error al eliminar la partida.');
+    });
+  }
+</script>
+</body>
+</html>
